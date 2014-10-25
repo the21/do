@@ -16,23 +16,8 @@
     <div class="container-fluid main">
         <div class="col-md-8 content">
 
-            <table>
-                <tr>
-                    <td>
-                        <span class="mega-header">Temperature</span>
-                    </td>
-                    <td>
-                        <span id="temperature" style="margin-left: 10px" class="mega-header"/>
-                    </td>
-                    <td>
-                        <span class="mega-header">C</span>
-                    </td>
-                    <td>
-                        <span id="datetime" class="mega-header"  style="margin-left: 10px;font-size: 30px;"></span>
-                    </td>
-                </tr>
-            </table>
-            <svg id="visualisation" width="1000" height="500" style=" margin-left: 0;"></svg>
+            <h1>Температура</h1>
+
         </div>
     </div>
 
@@ -45,9 +30,33 @@
     <script src="scripts/deviceDataRepository.js"></script>
 
 
+
+
+</head>
+<body>
+
+<div class="container">
+    <table>
+        <tr>
+            <td>
+                <span class="mega-header">Temperature</span>
+            </td>
+            <td>
+                <span id="temperature" style="margin-left: 10px" class="mega-header"/>
+            </td>
+            <td>
+                <span class="mega-header">C</span>
+            </td>
+            <td>
+                <span id="datetime" class="mega-header"  style="margin-left: 10px;font-size: 30px;"></span>
+            </td>
+        </tr>
+    </table>
+    <svg id="visualisation" width="1000" height="500" style=" margin-left: 0;"></svg>
 </div>
 
 <script type="text/javascript">
+
 
     function onGetData(deviceData) {
         $('#temperature').text(deviceData.data);
@@ -56,8 +65,10 @@
     }
 
     deviceRepository.setGetDataCallback(onGetData);
-    deviceRepository.setDelay(2000);
+    deviceRepository.setDelay(20000);
     deviceRepository.process();
+
+
 
     var n = 40,
             random = d3.random.normal(0, .2);
@@ -131,11 +142,15 @@
         }
     };
 
+
+
     var test = chart([0, n - 1], "linear", function tick(path, line, data, x) {
 
     });
 
+
     test.addPoint(Math.random());
+
 
 </script>
 
