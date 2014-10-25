@@ -9,7 +9,7 @@ import os
 
 from urllib2 import Request, urlopen, URLError
 
-logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO)
 
 def commit_suicide(*args):
     os.kill(os.getpid(), signal.SIGKILL)
@@ -31,7 +31,6 @@ if USE_PYGAME:
     cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])
 
     def save_photo(path):
-        print 'saving'
         try:
             cam.start()
             img = cam.get_image()

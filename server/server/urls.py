@@ -25,7 +25,7 @@ urlpatterns = patterns('',
 
 
 l = logic.Logic()
-debug = True
+#debug = True
 
 if not debug:
     a = 2

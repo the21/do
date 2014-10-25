@@ -15,19 +15,24 @@
 
 <div class="container-fluid main">
     <div class="col-md-8 content">
+        <div id="fuckup-list">
+            <!-- pictures with fuckups will be inserted here -->
+        </div>
+        <span id="time"> </span>
         <form action="#" class="submit-taks-form">
             <h1>Хочу не есть после</h1>
             <div class="form-group form-param">
                 <input id="stopTime" type="time" size="30">
             </div>
             <div>
-                <button id="turn_on" type="submit" onclick="return start_track();" class="btn btn-primary btn-lg submit-task-btn">Да!</button>
+                <button id="turn_on" onclick="return start_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Да!</button>
             </div>
             <div>
-            <button id="turn_off" type="submit" onclick="return stop_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Остановите эту пытку!</button>
+                <button id="turn_off" onclick="return stop_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Остановите эту пытку!</button>
             </div>
-            <h1 id="myRecord"></h1>
         </form>
+
+
     </div>
 </div>
 
@@ -41,23 +46,60 @@
 <script type="text/javascript">
     function switch_button(isOn) {
         if (isOn) {
-            $("#turn_on").removeClass("invisible");
-            $("#turn_off").addClass("invisible");
-        } else {
             $("#turn_on").addClass("invisible");
             $("#turn_off").removeClass("invisible");
+        } else {
+            $("#turn_on").removeClass("invisible");
+            $("#turn_off").addClass("invisible");
         }
     }
     function start_track() {
         $.getJSON("/api/start", {}, function(reply) {
-                switch_button(false);
+                switch_button(true);
             });
     }
     function stop_track() {
         $.getJSON("/api/stop", {}, function(reply) {
-                switch_button(true);
+                switch_button(false);
             });
     }
+
+    function onReply(reply) {
+        var fuckupsLength = $(".fuckup").length;
+        switch_button(reply.isOn);
+        if (reply.events.length == 0) {
+            $(".fuckup").fadeOut(500, function() { $(this).remove(); });
+        }
+        for (var i = fuckupsLength; i < reply.events.length; i += 1) {
+            var d = reply.events[i][0];
+            var img = reply.events[i][1];
+            var text = "<div class=\"fuckup\"><h1>" + d + "</h1>"
+                + "<img src=\"" + img + "\" height=200 /> </div>";
+            var dest = $("#fuckup-list").prepend(text).offset().top;
+            <!--$('html, body').animate({ scrollTop: dest }, 1000);-->
+        }
+
+        if (reply.lastReset) {
+            var diff = dateDiff( new Date(reply.lastReset * 1000), new Date());
+            var y = diff[0]
+            var m = diff[1]
+            var d = diff[2]
+            var H = diff[3]
+            var M = diff[4]
+            var S = diff[5]
+            var text = "продержался: " + d + " д. " + H + " ч. " + M + " м. " + S + " с.";
+            $("#time").text(text);
+        } else {
+            $("#time").text("");
+        }
+    }
+
+    function reload_events() {
+        $.getJSON("/api/events", {}, onReply);
+    }
+
+    window.setInterval(reload_events, 1000);
+    $(document).ready(reload_events);
 
     function dateDiff(date1, date2) {
         date1 = new Date(date1);
