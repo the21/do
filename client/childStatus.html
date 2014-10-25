@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/childStatus.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap&#45;theme.min.css"> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="scripts/deviceDataRepository.js"></script>
+    <script type="text/javascript">
+
+
+        function onGetData(deviceData) {
+            $('#temperature').text(deviceData.data);
+            $('#datetime').text(' at '+ deviceData.time);
+            // console.log(deviceData);
+        }
+
+        deviceRepository.setGetDataCallback(onGetData);
+        deviceRepository.setDelay(1500);
+        deviceRepository.process();
+
+    </script>
+
+
+</head>
+<body>
+
+<div class="container">
+    <table>
+        <tr>
+            <td>
+                <span class="mega-header">Temperature</span>
+            </td>
+            <td>
+                <span id="temperature" style="margin-left: 10px" class="mega-header"/>
+            </td> 
+            <td>
+                <span class="mega-header">C</span>
+            </td>
+            <td>
+                <span id="datetime" class="mega-header"  style="margin-left: 10px;font-size: 30px;"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>
