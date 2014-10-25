@@ -10,23 +10,27 @@ window.onload = function() {
         redirectUri: R_REDIRECT
     });
 
-    relayr.login({
-        success: function(token) {
-            console.log("login ok", token);
-
-            relayr.devices().getAllDevices(function(devices) {
-                console.log("getAllDevices", devices);
-                
-                relayr.devices().getDeviceData({
-                    deviceId: "e148cfb0-9399-47bd-b9da-bda1a7ee04fc",
-                    // token: "L90dUBR0cmr4BsvemQUPCGn-Q8kzMiZC",
+    relayr.devices().getDeviceData({
+                    deviceId: "ba370b21-2205-4e32-890f-842e8604cbd2",
+                    token: R_TOKEN,
                     incomingData: function(data) {
                         console.log("getDeviceData", data);
+                        var clr = data.clr;
+                        var color = $( ".colored" ).css( "background-color", "rgb("+0+","+clr.g+","+clr.b+")" );
                     }
                 });
-            });
+    
+    // relayr.login({
+    //     success: function(token) {
+    //         console.log("login ok", token);
+
+    //         relayr.devices().getAllDevices(function(devices) {
+    //             console.log("getAllDevices", devices);
+                
+                
+    //         });
 
 
-        }
-    });
+    //     }
+    // });
 }
