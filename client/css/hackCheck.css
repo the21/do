@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html
+{
+    height: 100%;
+}
+
+body
+{
+    background-size: contain;
+    height: 100%;
+    width: 100%;
+}
+table{
+    width: 100%;
+    height: 100%;
+}
+
+.mega-header
+{
+    font-size: 40px;
+}
+
+.imageDiv{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
