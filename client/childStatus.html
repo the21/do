@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/childStatus.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap&#45;theme.min.css"> -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="scripts/deviceDataRepository.js"></script>
 
-
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 
-<div class="container">
-    <table>
-        <tr>
-            <td>
-                <span class="mega-header">Temperature</span>
-            </td>
-            <td>
-                <span id="temperature" style="margin-left: 10px" class="mega-header"/>
-            </td>
-            <td>
-                <span class="mega-header">C</span>
-            </td>
-            <td>
-                <span id="datetime" class="mega-header"  style="margin-left: 10px;font-size: 30px;"></span>
-            </td>
-        </tr>
-    </table>
-    <svg id="visualisation" width="1000" height="500" style=" margin-left: 0;"></svg>
+    <div class="container-fluid main">
+        <div class="col-md-8 content">
+
+            <table>
+                <tr>
+                    <td>
+                        <span class="mega-header">Temperature</span>
+                    </td>
+                    <td>
+                        <span id="temperature" style="margin-left: 10px" class="mega-header"/>
+                    </td>
+                    <td>
+                        <span class="mega-header">C</span>
+                    </td>
+                    <td>
+                        <span id="datetime" class="mega-header"  style="margin-left: 10px;font-size: 30px;"></span>
+                    </td>
+                </tr>
+            </table>
+            <svg id="visualisation" width="1000" height="500" style=" margin-left: 0;"></svg>
+        </div>
+    </div>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap&#45;theme.min.css"> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="scripts/deviceDataRepository.js"></script>
+
+
 </div>
 
 <script type="text/javascript">
-
 
     function onGetData(deviceData) {
         $('#temperature').text(deviceData.data);
@@ -48,10 +56,8 @@
     }
 
     deviceRepository.setGetDataCallback(onGetData);
-    deviceRepository.setDelay(20000);
+    deviceRepository.setDelay(2000);
     deviceRepository.process();
-
-
 
     var n = 40,
             random = d3.random.normal(0, .2);
@@ -125,16 +131,14 @@
         }
     };
 
-
-
     var test = chart([0, n - 1], "linear", function tick(path, line, data, x) {
 
     });
 
-
     test.addPoint(Math.random());
 
-
 </script>
+
 </body>
 </html>
+
