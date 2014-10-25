@@ -1,3 +1,4 @@
 Django
 pubnub
 djangorestframework
+django-filter

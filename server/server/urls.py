@@ -4,6 +4,7 @@ from rest_framework import routers
 from doapi import views
 from doapi import logic
 import random
+from doapi import hack
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -24,14 +25,19 @@ urlpatterns = patterns('',
 
 
 l = logic.Logic()
+debug = True
 
-types = ["light","temp","snd_level"]
-def getRandomData():
-    return { types[random.randint(0,len(types)-1)]: random.randint(0,100) }
+if not debug:
+    sl = hack.SensorListener()
+    sl.add_callback(l.onDataReceived, None)
+    sl.launch()
+else:
+    types = ["light","temp","snd_level"]
+    def getRandomData():
+        return { types[random.randint(0,len(types)-1)]: random.randint(0,100) }
 
-
-for x in range(0, 50):
-    # print "data %s" % ( getRandomData() )
-    l.onDataReceived(getRandomData())
+    for x in range(0, 50):
+        # print "data %s" % ( getRandomData() )
+        l.onDataReceived(getRandomData())
 
 

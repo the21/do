@@ -1,3 +1,7 @@
 from django.contrib import admin
+from doapi.models import *
 
-# Register your models here.
+
+admin.site.register(DataEntry)
+admin.site.register(Listener)
+admin.site.register(Event)
