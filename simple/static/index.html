@@ -15,10 +15,8 @@
 
 <div class="container-fluid main">
     <div class="col-md-8 content">
-        <div id="fuckup-list">
-            <!-- pictures with fuckups will be inserted here -->
-        </div>
-        <span id="time"> </span>
+       
+        
         <form action="#" class="submit-taks-form">
             <h1>Хочу не есть после</h1>
             <div class="form-group form-param">
@@ -30,6 +28,11 @@
             <div>
                 <button id="turn_off" onclick="return stop_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Остановите эту пытку!</button>
             </div>
+		<div class="alert alert-success" role="alert" id='timeContainer'><span id="time" style='font-size:30px;'> </span></div>
+		
+ 		<div id="fuckup-list">
+            	<!-- pictures with fuckups will be inserted here -->
+        	</div>
         </form>
 
 
@@ -72,9 +75,17 @@
         }
         for (var i = fuckupsLength; i < reply.events.length; i += 1) {
             var d = reply.events[i][0];
+            var dateTime = new Date(d * 1000);
+	    var formatedDateTime = ('0' + dateTime.getDate()).slice(-2) + '.'
+           	  + ('0' + (dateTime.getMonth()+1)).slice(-2) + '.'
+          	   + dateTime.getFullYear()+" "
+		+('0' + (dateTime.getHours())).slice(-2) + ':'
+		+('0' + (dateTime.getMinutes())).slice(-2);
             var img = reply.events[i][1];
-            var text = "<div class=\"fuckup\"><h1>" + d + "</h1>"
-                + "<img src=\"" + img + "\" height=200 /> </div>";
+            var text =  "<div class='fuckup'><div class='alert alert-danger' role='alert'>"
+		+"<h1> Спалился " + formatedDateTime + "</h1>"
+                + "<img src='" + img + "' height='200' />"
+		+" </div></div>";
             var dest = $("#fuckup-list").prepend(text).offset().top;
             <!--$('html, body').animate({ scrollTop: dest }, 1000);-->
         }
@@ -88,9 +99,11 @@
             var M = diff[4]
             var S = diff[5]
             var text = "продержался: " + d + " д. " + H + " ч. " + M + " м. " + S + " с.";
+	    $("#timeContainer").show();
             $("#time").text(text);
         } else {
             $("#time").text("");
+	    $("#timeContainer").hide();
         }
     }
 
