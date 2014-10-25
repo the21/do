@@ -4,9 +4,17 @@
 import json
 import logging
 import Pubnub
+import signal
+import os
+
 from urllib2 import Request, urlopen, URLError
 
 logging.basicConfig(level=logging.INFO)
+
+def commit_suicide(*args):
+    os.kill(os.getpid(), signal.SIGKILL)
+
+signal.signal(signal.SIGINT, commit_suicide)
 
 try:
     import pygame
@@ -58,6 +66,7 @@ def get_connection_info(device):
         'light': 'ba370b21-2205-4e32-890f-842e8604cbd2',
         'sound': '077cbc8c-eece-4b6e-9bd6-fcb74ce13a27',
         'temperature': '199209ec-ff32-472c-b904-cc0d527a30ab',
+        'accel': 'f752cc0c-95a7-4811-a990-05c3b324f2c7'
     }
     url = 'https://api.relayr.io/apps/{}/devices/{}'.format(app_id, device_id[device])
     request = Request(url)
@@ -106,9 +115,10 @@ class SensorListener(object):
         logging.error('pubnub error: {}'.format(message))
 
     def launch(self):
-        connect_to_device('light', self.on_ok, self.on_error)
-        connect_to_device('sound', self.on_ok, self.on_error)
-        connect_to_device('temperature', self.on_ok, self.on_error)
+        for d in ['light', 'sound', 'temperature', 'accel']:
+            connect_to_device('light', self.on_ok, self.on_error)
+            # make sure pubnub library doesn't handle our signals
+            signal.signal(signal.SIGINT, commit_suicide)
         print 'everything started'
 
 class RefrigeratorKeeper(object):
