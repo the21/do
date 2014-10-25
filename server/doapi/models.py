@@ -38,7 +38,7 @@ class DataEntry(models.Model):
     pub_time = models.TimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return "%s value=%s time=%s" % (self.value, self.d_type, self.pub_time)
+        return "{%s} value=%s time=%s" % (self.d_type, self.value, self.pub_time)
 
 class Listener(models.Model):
     title = models.CharField(default="", max_length=120)
@@ -53,11 +53,13 @@ class Listener(models.Model):
     creator = models.ForeignKey(User, related_name="listeners")
 
     def __unicode__(self):
-        return "%s value=[%s;%s] time=[%s,%s]" % (self.title, self.min_value, self.max_value, self.min_time_value, self.max_time_value)
+        return "{%s} %s value=[%s;%s] time=[%s,%s]" % (self.d_type, self.title, self.min_value, self.max_value, self.min_time_value, self.max_time_value)
 
 
 class Event(models.Model):
     listener = models.ForeignKey(Listener, related_name="events")
     data = models.ForeignKey(DataEntry, related_name="events")
     pub_date = models.DateTimeField(auto_now_add=True)
+    def __unicode__(self):
+        return "%s | %s" % (self.data, self.listener)
 
