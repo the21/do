@@ -8,7 +8,6 @@ from urllib2 import Request, urlopen, URLError
 
 logging.basicConfig(level=logging.INFO)
 
-
 try:
     import pygame
     import pygame.camera
@@ -116,9 +115,7 @@ class RefrigeratorKeeper(object):
     def __init__(self):
         self.is_open = True
 
-    def keep(self, data):
-        light = data['light']
-        print light, data
+    def keep(self, light):
         if light < 10:
             self.is_open = False
         elif not self.is_open:
@@ -140,6 +137,6 @@ class BeerKeeper(object):
 
 if __name__ == '__main__':
     sl = SensorListener()
-    #sl.add_callback(RefrigeratorKeeper().keep, 'light')
+    sl.add_callback(RefrigeratorKeeper().keep, 'light')
     sl.add_callback(BeerKeeper().keep, 'prox')
     sl.launch()
