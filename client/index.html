@@ -94,7 +94,7 @@
         var _listenerId = listenerId;
 
         return {
-            getStopTime: function () {
+            getStopTimeInfo: function () {
                 var requestResult = {
                     "count": 2,
                     "next": null,
@@ -121,7 +121,7 @@
                             "save_all_checks": false,
                             "min_value": 0,
                             "max_value": 0,
-                            "pub_date": "2014-10-25T17:33:10.655",
+                            "pub_date": "2014-10-21T17:33:10.655",
                             "min_time_value": "20:00:00",
                             "max_time_value": "23:59:00",
                             "creator": "http://127.0.0.1:8000/v0/users/1/"
@@ -137,10 +137,10 @@
                         break;
                     }
                 }
-                return listener.min_time_value;
+                return {stopTime:listener.min_time_value, eventStartDate:listener.pub_date};
             },
 
-            getOverbearDaysCount: function () {
+            getOverbearDaysCount: function (eventStartDate) {
                 var requestResult = {
                     "count": 163,
                     "next": "http://127.0.0.1:8000/v0/events/?page=2&format=json",
@@ -179,20 +179,20 @@
                             "url": "http://127.0.0.1:8000/v0/events/5/",
                             "listener": "http://127.0.0.1:8000/v0/listeners/1/",
                             "data": "http://127.0.0.1:8000/v0/entries/1237/",
-                            "pub_date": "2014-10-25T22:36:51.037"
+                            "pub_date": "2014-10-24T22:36:51.037"
                         }
                     ]
                 };
 
                 var index;
-                var maxdate = null;
+                var maxdate = eventStartDate;
                 for (index = 0; index < requestResult.results.length; ++index) {
                     if (!maxdate || requestResult.results[index].pub_date > maxdate) {
                         maxdate = requestResult.results[index].pub_date;
                     }
                 }
 
-                return maxdate;
+                return dateDiff(maxdate,new Date())[2];
             }
 
 
@@ -200,11 +200,11 @@
     }
 
     var repository = dataRepository(2);
-    var stopTime = repository.getStopTime();
-    $('#stopTime').val(stopTime);
-    var overbearDaysCount = repository.getOverbearDaysCount();
+    var stopTimeInfo = repository.getStopTimeInfo();
+    $('#stopTime').val(stopTimeInfo.stopTime);
+    var overbearDaysCount = repository.getOverbearDaysCount(stopTimeInfo.eventStartDate);
     if (overbearDaysCount > 0) {
-        var recordText = "I do not eat after " + stopTime + " whole " + overbearDaysCount + " days";
+        var recordText = "I do not eat after " + stopTimeInfo.stopTime + " whole " + overbearDaysCount + " days";
         $('#myRecord').text(recordText);
     }
 
