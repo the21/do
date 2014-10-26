@@ -60,9 +60,9 @@ def get_state():
     static_dir = os.path.join(CURDIR, 'static', 'fuckups')
     for f in os.listdir(static_dir):
         if f.endswith('.jpg'):
+            ts = time.mktime(datetime.datetime.strptime(f.split('.')[0], '%Y-%m-%d-%H-%M-%S').timetuple())
             events.append(
-                (f.split('.')[0],
-                 "/{}/{}".format('static/fuckups', f)))
+                (ts, "/{}/{}".format('static/fuckups', f)))
     events.sort()
     if keeper.last_reset:
         last_reset = time.mktime(keeper.last_reset.timetuple())
