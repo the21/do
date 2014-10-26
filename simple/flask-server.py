@@ -4,6 +4,9 @@
 import datetime
 import os
 import time
+import urllib2
+import urllib
+import urlparse
 
 from hack import  SensorListener, play_sound, save_photo
 from flask import Flask, jsonify
@@ -74,6 +77,31 @@ def get_state():
         'events': events
     }
 
+@app.route("/api/achtung")
+def achtung():
+    keeper.on_event()
+    return jsonify(get_state())
+
+@app.route("/api/buy")
+def buy():
+    ret = urllib2.urlopen(
+        'https://api-3t.sandbox.paypal.com/nvp',
+        data=urllib.urlencode([
+            ("USER", "sdk-three_api1.sdk.com"),
+            ("PWD", "QFZCWN5HZM8VBG7Q"),
+            ("SIGNATURE", "A-IzJhZZjhg29XQ2qnhapuwxIDzyAZQ92FRP5dqBzVesOkzbdUONzmOU"),
+            ("VERSION", "119"),
+            ("PAYMENTREQUEST_0_PAYMENTACTION", "Sale"),
+            ("PAYMENTREQUEST_0_CUSTOM", "BEER!!!"),
+            ("PAYMENTREQUEST_0_AMT", "500"),
+            ("PAYMENTREQUEST_0_CURRENCYCODE", "RUB"),
+            ("RETURNURL", "https://localhost:5000"),
+            ("CANCELURL", "https://localhost:5000"),
+            ("METHOD", "SetExpressCheckout"),
+        ])
+    ).read()
+    return jsonify(urlparse.parse_qs(ret))
+
 @app.route("/api/events")
 def get_events():
     return jsonify(get_state())
@@ -90,12 +118,12 @@ def stop_keeper():
 
 @app.route("/")
 def index_html():
-    return app.send_static_file('./index.html')
+    return app.send_static_file('./beer-keeper.html')
 
 if __name__ == "__main__":
     reset_storage()
     sl = SensorListener()
     sl.add_callback(keeper.keep, 'light')
-    sl.launch()
+    #sl.launch()
     app.debug = True
     app.run()
