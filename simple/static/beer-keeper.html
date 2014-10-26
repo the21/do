@@ -16,24 +16,17 @@
 <div class="container-fluid main">
     <div class="col-md-8 content">
         <form action="#" class="submit-taks-form">
-            <h1>BeerKeeper</h1>
+            <h1>FridgeLog</h1>
             <div>
-                <script data-env="sandbox" data-tax="0" data-shipping="100" data-currency="RUB" data-amount="50" data-quantity="10" data-name="Beer" data-button="buynow" src="https://www.paypalobjects.com/js/external/paypal-button.min.js?merchant=fsl59@mail.ru" async="async" ></script>
+                <button id="turn_on" onclick="return start_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Start FridgeLog!</button>
             </div>
             <div>
-                <button id="turn_on" onclick="return start_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Keep the beer!</button>
+                <button id="turn_off" onclick="return stop_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Stop FridgeLog!</button>
             </div>
-            <div>
-                <button id="turn_off" onclick="return stop_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Stop keeping!</button>
+            <div id="fuckup-list">
+                <!-- pictures with fuckups will be inserted here -->
             </div>
-		<!--<div class="alert alert-success" role="alert" id='timeContainer'><span id="time" style='font-size:30px;'> </span></div>-->
-		
- 		<div id="fuckup-list">
-            	<!-- pictures with fuckups will be inserted here -->
-        	</div>
         </form>
-
-
     </div>
 </div>
 
