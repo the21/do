@@ -44,7 +44,8 @@ class Logic():
         return False
 
     def onEvent(self,event):
-        print "!event processing %s" % event
+        print "!!!!!!!!!!!!!! event processing %s" % event
+        return
         text = get_template('notification_email.txt')
         html = get_template('notification_email.html')
         

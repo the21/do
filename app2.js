@@ -42,58 +42,32 @@ if(document.getElementById("canvas"))
         redirectUri: R_REDIRECT
     });
 
+    
+
     relayr.devices().getDeviceData({
-                    deviceId: SOUND,
+                    deviceId: TEMP,
                     token: R_TOKEN,
                     incomingData: function(data) {
                         console.log("getDeviceData", data);
-                        var val = data.snd_level;
-                        var max = 500;
+                        var val = data.temp;
+                        var max = 43;
                         var pr = 100*val/max;
-
-                        var alertv = 250;
+                        
+                        var alertv = 37;
+                        if($("#temp"))
+                        {
                         // var pralert = 100*alert/max;
-                        if($("#snd")){
-                        $("#snd").css("width", pr+"%");
+                        $("#temp").css("width", pr+"%");
                         // $("#temp-alert").css("width", pralert+"%");
                         // $("#temp").text(val);
 
                         if (val > alertv)
                         {
-                            var snd = new Audio("meeting.wav");
-                            snd.play();
+                          alert("Temperature is too high, please call a doctor");
                         }
                         }
                         // var clr = data.clr;
                     //     var color = $( ".colored" ).css( "background-color", "rgb("+0+","+clr.g+","+clr.b+")" );
                     }
                 });
-
-
-    relayr.devices().getDeviceData({
-                    deviceId: LIGHT,
-                    token: R_TOKEN,
-                    incomingData: function(data) {
-                        console.log("getDeviceData", data);
-                        var val = data.light;
-                        var max = 800;
-                        var pr = 100*val/max;
-                        
-                        var alertv = 350;
-                        if($("#light")){
-                        // var pralert = 100*alert/max;
-                        $("#light").css("width", pr+"%");
-                        // $("#temp-alert").css("width", pralert+"%");
-                        // $("#temp").text(val);
-
-                        if (val < alertv)
-                        {
-                          alert("It's too dark, please turn light off to help your eyes");
-                        }
-                    }
-                        // var clr = data.clr;
-                    //     var color = $( ".colored" ).css( "background-color", "rgb("+0+","+clr.g+","+clr.b+")" );
-                    }
-                });
-
 }

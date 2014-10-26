@@ -32,11 +32,11 @@ USE_TZ = True
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = '*'
-EMAIL_HOST_PASSWORD = '*'
+EMAIL_HOST_USER = 'ai@gamesjam.org'
+EMAIL_HOST_PASSWORD = '7gjW4KS1'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "Notification <*>"
-SERVER_EMAIL = "*"
+DEFAULT_FROM_EMAIL = "Notification <ai@gamesjam.org>"
+SERVER_EMAIL = "ai@gamesjam.org"
 
 
 INSTALLED_APPS = (

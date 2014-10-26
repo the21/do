@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 def commit_suicide(*args):
     os.kill(os.getpid(), signal.SIGKILL)
 
-signal.signal(signal.SIGINT, commit_suicide)
+# signal.signal(signal.SIGINT, commit_suicide)
 
 try:
     import pygame
@@ -118,7 +118,7 @@ class SensorListener(object):
         for d in ['light', 'sound', 'temperature', 'accel']:
             connect_to_device('light', self.on_ok, self.on_error)
             # make sure pubnub library doesn't handle our signals
-            signal.signal(signal.SIGINT, commit_suicide)
+            # signal.signal(signal.SIGINT, commit_suicide)
         print 'everything started'
 
 class RefrigeratorKeeper(object):

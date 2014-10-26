@@ -4,39 +4,59 @@
 
     <meta charset="UTF-8">
     <title></title>
-
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/style.css">
-
+<style>
+        body {
+            padding-top: 53px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
 </head>
 <body>
 
-<div class="container-fluid main">
+<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="nav navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <b><a class="navbar-brand" >do</a></b>
+            </div>
+        </div>
+    </div>
+<div class="row">
+<div class="container">
     <div class="col-md-8 content">
-       
+       <div class="jumbotron">
+          <h3>Хочу не есть после</h3>
+          <p>dsadklsajdlkjsdlsjaldkjsa</p>
+          <form action="#" class="submit-taks-form">
+                    <!-- <h1>Хочу не есть после</h1> -->
+                    <div class="form-group form-param">
+                        <input id="stopTime" type="time" size="30">
+                    </div>
+                    <div>
+                        <button id="turn_on" onclick="return start_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Да!</button>
+                    </div>
+                    <div>
+                        <button id="turn_off" onclick="return stop_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Остановите эту пытку!</button>
+                    </div>
+                <div class="alert alert-success" role="alert" id='timeContainer'><span id="time" style='font-size:30px;'> </span></div>
+                
+                <div id="fuckup-list">
+                        <!-- pictures with fuckups will be inserted here -->
+                    </div>
+                </form>
+          <p><a class="btn btn-primary btn-lg" role="button">Сохранить</a></p>
+        </div>
         
-        <form action="#" class="submit-taks-form">
-            <h1>Хочу не есть после</h1>
-            <div class="form-group form-param">
-                <input id="stopTime" type="time" size="30">
-            </div>
-            <div>
-                <button id="turn_on" onclick="return start_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Да!</button>
-            </div>
-            <div>
-                <button id="turn_off" onclick="return stop_track();" class="invisible btn btn-primary btn-lg submit-task-btn">Остановите эту пытку!</button>
-            </div>
-		<div class="alert alert-success" role="alert" id='timeContainer'><span id="time" style='font-size:30px;'> </span></div>
-		
- 		<div id="fuckup-list">
-            	<!-- pictures with fuckups will be inserted here -->
-        	</div>
-        </form>
 
 
     </div>
+</div>
 </div>
 
 
